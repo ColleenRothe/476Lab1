@@ -7,12 +7,17 @@ package pkg476lab1;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.regex.*;  
+
 /**
  *
  * @author colleenrothe
  */
 public class Driver {
     private static int dataPieces=0;
+    
+    private static String regex = ".*%B\\d{13,19}\\^[a-zA-Z]{2,26}/[a-zA-Z]{2,26}\\^\\d{7}[a-zA-Z0-9]*\\?.*";
+    private static String regex2=".*;\\d{13,19}=\\d{14}[a-zA-Z0-9]*\\?.*";
 
     /**
      * @param args the command line arguments
@@ -25,6 +30,13 @@ public class Driver {
             String line;
             while((line=reader.readLine())!=null){
                 System.out.println(line);
+                Pattern pattern = Pattern.compile(regex2);
+                Matcher matcher = pattern.matcher(line);
+                boolean isMatched = matcher.matches();
+                if(isMatched == true){
+                    dataPieces++;
+                   
+                }
                 
           
             }
@@ -43,7 +55,7 @@ public class Driver {
     }
     
     public static void findData(){
-        System.out.println("There is"+dataPieces+" piece of credit card information in the memory data!");
+        System.out.println("There is "+dataPieces+" piece of credit card information in the memory data!");
     }
     
 }
