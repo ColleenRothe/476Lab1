@@ -12,6 +12,7 @@ import java.io.IOException;
  * @author colleenrothe
  */
 public class Driver {
+    private static int dataPieces=0;
 
     /**
      * @param args the command line arguments
@@ -24,6 +25,8 @@ public class Driver {
             String line;
             while((line=reader.readLine())!=null){
                 System.out.println(line);
+                
+          
             }
         }catch (IOException e){
             e.printStackTrace();
@@ -36,6 +39,11 @@ public class Driver {
                 ex.printStackTrace();
             }
         }
+        findData();
+    }
+    
+    public static void findData(){
+        System.out.println("There is"+dataPieces+" piece of credit card information in the memory data!");
     }
     
 }
