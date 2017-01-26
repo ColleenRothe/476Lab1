@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.regex.*;  
+import java.util.ArrayList;
 
 /**
  *
@@ -18,6 +19,9 @@ public class Driver {
     
     private static String regex = ".*%B\\d{13,19}\\^[a-zA-Z]{2,26}/[a-zA-Z]{2,26}\\^\\d{7}[a-zA-Z0-9]*\\?.*";
     private static String regex2=".*;\\d{13,19}=\\d{14}[a-zA-Z0-9]*\\?.*";
+    private static ArrayList <String> track1 = new ArrayList<>();
+    private static ArrayList <String> track2 = new ArrayList<>();
+
 
     /**
      * @param args the command line arguments
@@ -29,14 +33,23 @@ public class Driver {
             reader = new BufferedReader(new FileReader("memorydump.dmp"));
             String line;
             while((line=reader.readLine())!=null){
-                System.out.println(line);
-                Pattern pattern = Pattern.compile(regex2);
+                //System.out.println(line);
+                Pattern pattern = Pattern.compile(regex);
                 Matcher matcher = pattern.matcher(line);
                 boolean isMatched = matcher.matches();
                 if(isMatched == true){
-                    dataPieces++;
-                   
+                    track1.add(line);  
                 }
+                
+                Pattern pattern2 = Pattern.compile(regex2);
+                Matcher matcher2 = pattern2.matcher(line);
+                boolean isMatched2 = matcher2.matches();
+                if(isMatched2 == true){
+                    //get the line...
+                    track2.add(line);  
+
+                }
+                
                 
           
             }
@@ -51,10 +64,15 @@ public class Driver {
                 ex.printStackTrace();
             }
         }
-        findData();
     }
     
     public static void findData(){
+          
+        printData();        
+    }
+    
+    
+    public static void printData(){
         System.out.println("There is "+dataPieces+" piece of credit card information in the memory data!");
     }
     
