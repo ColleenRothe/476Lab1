@@ -19,8 +19,8 @@ public class Driver {
 
     private static int dataPieces = 0;
 
-    private static String regex = ".*(%B\\d{13,19}\\^[a-zA-Z]{2,26}/[a-zA-Z]{2,26}\\^\\d{7}[a-zA-Z0-9]*\\?).*";
-    private static String regex2 = ".*(;\\d{13,19}=\\d{14}[a-zA-Z0-9]*\\?).*";
+    private static String regex = "(%B\\d{13,19}\\^[a-zA-Z]{2,26}/[a-zA-Z]{2,26}\\^\\d{7}[a-zA-Z0-9]*\\?)";
+    private static String regex2 = "(;\\d{13,19}=\\d{14}\\d*\\?)";
     private static ArrayList<String> track1 = new ArrayList<>();
     private static ArrayList<String> track2 = new ArrayList<>();
     private static ArrayList<CardInfo> finalInfo = new ArrayList<>();
@@ -32,25 +32,29 @@ public class Driver {
         // TODO code application logic here
         BufferedReader reader = null;
         try {
-            reader = new BufferedReader(new FileReader("test.rtf"));
+            reader = new BufferedReader(new FileReader("memorydump.dmp"));
             String line;
             while ((line = reader.readLine()) != null) {
                 //System.out.println(line);
                 Pattern pattern = Pattern.compile(regex);
                 Matcher matcher = pattern.matcher(line);
-                boolean isMatched = matcher.matches();
-                if (isMatched == true) {
-                    track1.add(matcher.group(1));
-                }
-
+                
                 Pattern pattern2 = Pattern.compile(regex2);
                 Matcher matcher2 = pattern2.matcher(line);
-                boolean isMatched2 = matcher2.matches();
-                if (isMatched2 == true) {
-                    track2.add(matcher2.group(1));
-
+                
+                while(matcher.find()){
+                    if(!track1.contains(matcher.group(1))){
+                    track1.add(matcher.group(1));
+                    }
                 }
+               
 
+                while(matcher2.find()){
+                    if(!track2.contains(matcher2.group(1))){
+                    track2.add(matcher2.group(1));
+                    }
+                }
+                
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -74,6 +78,7 @@ public class Driver {
         for (int j = 0; j < track2.size(); j++) {
             System.out.println(track2.get(j));
         }
+        System.out.println("NOW FIND A MATCH");
         //find the PAN for each and check for a match
         String panRegex = ".*B(\\d*)\\^.*";
         String panRegex2=".*;(\\d*)=.*";
@@ -88,27 +93,21 @@ public class Driver {
                 System.out.println(matcher.group(1));
                 pan = matcher.group(1);
             }
-            for (int l = 0; l < track2.size(); l++) {
-                String pan2 = "";
+            
+            for(String track : track2){
+                String pan2 ="";
                 Pattern pattern2 = Pattern.compile(panRegex2);
-                Matcher matcher2 = pattern2.matcher(track2.get(k));
-                boolean isMatched2 = matcher2.matches();
-                if (isMatched2 == true) {
-                    System.out.println("PAN2");
-                    System.out.println(matcher2.group(1));
+                Matcher matcher2 = pattern2.matcher(track);
+                while(matcher2.find()){
                     pan2 = matcher2.group(1);
-                    
+                    System.out.println(pan2);
                     if(pan.equals(pan2)){
-                        System.out.println("MATCH");
-                        dataPieces ++;
-                        match(track1.get(k),track2.get(l));
-                        
-                    }
-                    else{
-                        System.out.println("NO MATCH");
+                        dataPieces++;
+                        match(track1.get(k),track);
                     }
                 }
             }
+            
         }
 
         printData();
