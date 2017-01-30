@@ -7,36 +7,43 @@ package pkg476lab1;
 
 /**
  *
- * @author colleenrothe
- * This is a class to represent a cardholder's information in the memory dump
+ * @author colleenrothe This is a class to represent cc information in the
+ * memory dump
  */
 public class CardInfo {
+
     private String name;
     private String cardNum;
     private String date;
     private String pin;
     private String cvvNum;
-    
-    public CardInfo(String name, String cardNum, String date, String pin, String cvvNum){
+
+    public CardInfo(String name, String cardNum, String date, String pin, String cvvNum) {
         this.name = name;
         this.cardNum = cardNum;
         this.date = date;
         this.pin = pin;
         this.cvvNum = cvvNum;
     }
-    
+
     //get methods to access information
-    
-    public String getName(){
+    public String getName() {
         return name;
     }
-    public String getCardNum(){
+
+    public String getCardNum() {
         return cardNum;
-    }public String getDate(){
+    }
+
+    public String getDate() {
         return date;
-    }public String getPin(){
+    }
+
+    public String getPin() {
         return pin;
-    }public String getCvvNum(){
+    }
+
+    public String getCvvNum() {
         return cvvNum;
-    }    
+    }
 }
