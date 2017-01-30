@@ -8,6 +8,7 @@ package pkg476lab1;
 /**
  *
  * @author colleenrothe
+ * This is a class to represent a cardholder's information in the memory dump
  */
 public class CardInfo {
     private String name;
@@ -24,6 +25,8 @@ public class CardInfo {
         this.cvvNum = cvvNum;
     }
     
+    //get methods to access information
+    
     public String getName(){
         return name;
     }
@@ -35,7 +38,5 @@ public class CardInfo {
         return pin;
     }public String getCvvNum(){
         return cvvNum;
-    }
-    
-       
+    }    
 }
